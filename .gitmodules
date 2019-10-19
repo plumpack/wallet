@@ -1,0 +1,3 @@
+[submodule "build/Build/Common"]
+	path = build/Build/Common
+	url = https://github.com/plumpack/build-common.git
