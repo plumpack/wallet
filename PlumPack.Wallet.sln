@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{64721601-AF5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlumPack.Wallet.Web", "src\PlumPack.Wallet.Web\PlumPack.Wallet.Web.csproj", "{50590207-82DB-4241-8E0A-86B984597D5A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{B9FFF2AD-D8B1-45C4-888B-44F44AABED7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "build\Build\Build.csproj", "{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +36,21 @@ Global
 		{50590207-82DB-4241-8E0A-86B984597D5A}.Release|x64.Build.0 = Release|Any CPU
 		{50590207-82DB-4241-8E0A-86B984597D5A}.Release|x86.ActiveCfg = Release|Any CPU
 		{50590207-82DB-4241-8E0A-86B984597D5A}.Release|x86.Build.0 = Release|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Debug|x64.Build.0 = Debug|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Debug|x86.Build.0 = Debug|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Release|x64.ActiveCfg = Release|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Release|x64.Build.0 = Release|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Release|x86.ActiveCfg = Release|Any CPU
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{50590207-82DB-4241-8E0A-86B984597D5A} = {64721601-AF5F-47A0-AC6B-C01F3A8AD705}
+		{E0F88A39-EF99-491D-BAB3-FA23D8C98E21} = {B9FFF2AD-D8B1-45C4-888B-44F44AABED7D}
 	EndGlobalSection
 EndGlobal

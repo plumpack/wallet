@@ -12,10 +12,10 @@ namespace Build
             
             ProjectDefinition.Register(options, new ProjectDefinition
             {
-                ProjectName = "Identity Server",
-                SolutionPath = "./PlumPack.IdentityServer.sln",
-                WebProjectPath = "./src/PlumPack.IdentityServer.Web/PlumPack.IdentityServer.Web.csproj",
-                DockerImageName = "plumpack/identity-server"
+                ProjectName = "Wallet",
+                SolutionPath = "./PlumPack.Wallet.sln",
+                WebProjectPath = "./src/PlumPack.Wallet.Web/PlumPack.Wallet.Web.csproj",
+                DockerImageName = "plumpack/wallet"
             });
             
             Runner.Execute(options);
