@@ -1,0 +1,3 @@
+Host: "mailhog"
+Port: 1025
+FromEmail: "noreply@dev.com"

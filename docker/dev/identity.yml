@@ -1,0 +1,19 @@
+ConnectionStrings:
+  Postgres: "User ID=postgres;Password=password;Host=postgres;Port=5432;Database=identityserver;Pooling=true;"
+PlumPack:
+  MainSiteUrl: "http://localhost:5000/"
+  Email:
+    Host: "localhost"
+    Port: 1025
+    FromEmail: "noreply@dev.com"
+ClientApplications:
+  - ClientId: "wallet"
+    ClientName: "Wallet"
+    Secret: "wallet-secret"
+    RedirectUris:
+    - "http://localhost:5002/signin-oidc"
+    PostLogoutRedirectUris:
+    - "http://localhost:5002/"
+    - "http://localhost:5002/logout/frontchannel"
+    - "http://localhost:5002/logout/callback"
+    FrontChannelLogoutUri: "http://localhost:5002/logout/frontchannel"
