@@ -5,12 +5,13 @@ services:
     ports:
     - "5432:5432"
   identity:
-    image: plumpack/identity-server:0.3.0-alpha.7
+    image: plumpack/identity-server:0.3.0-alpha.11
     volumes:
       - "./identity.yml:/etc/plumpack/identity-server/config.yml"
       - "./email.yml:/etc/plumpack/identity-server/email.yml"
       - "./plumpack.yml:/etc/plumpack/identity-server/plumpack.yml"
       - "./signing.yml:/etc/plumpack/identity-server/signing.yml"
+      - "./key.pfx:/etc/plumpack/identity-server/key.pfx"
     ports:
     - "5000:5000"
   mailhog:

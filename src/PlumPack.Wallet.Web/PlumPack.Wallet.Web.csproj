@@ -6,6 +6,19 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\..\shared\PlumPack.IdentityServer.Client\PlumPack.IdentityServer.Client.csproj" />
+    <ProjectReference Include="..\..\shared\PlumPack.Web\PlumPack.Web.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Privacy.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Shared\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Shared\_ValidationScriptsPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\_ViewStart.cshtml" />
   </ItemGroup>
 
 </Project>

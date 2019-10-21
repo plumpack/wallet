@@ -20,6 +20,7 @@ namespace PlumPack.Wallet.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseKestrel(options => { options.ListenAnyIP(5002); });
                     webBuilder.UseStartup<Startup>();
                 });
     }
