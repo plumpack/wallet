@@ -22,6 +22,8 @@ namespace PlumPack.Wallet.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Registrar.Register(services, Configuration, "/etc/plumpack/wallet/");
+            
             services.AddIdentityServerClientServices(Configuration);
             services.AddControllersWithViews();
         }
@@ -36,7 +38,6 @@ namespace PlumPack.Wallet.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            
             app.UseIdentityServerClient();
             app.UseEndpoints(endpoints =>
             {

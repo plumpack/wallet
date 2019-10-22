@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\shared\PlumPack.IdentityServer.Client\PlumPack.IdentityServer.Client.csproj" />
     <ProjectReference Include="..\..\shared\PlumPack.Web\PlumPack.Web.csproj" />
+    <ProjectReference Include="..\PlumPack.Wallet\PlumPack.Wallet.csproj" />
   </ItemGroup>
 
 

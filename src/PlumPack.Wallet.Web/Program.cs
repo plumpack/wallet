@@ -1,11 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace PlumPack.Wallet.Web
 {
@@ -13,15 +6,7 @@ namespace PlumPack.Wallet.Web
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            PlumPack.Web.Main.Program.Main<Startup>(5002, "/etc/plumpack/wallet", args, host => Task.CompletedTask);
         }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseKestrel(options => { options.ListenAnyIP(5002); });
-                    webBuilder.UseStartup<Startup>();
-                });
     }
 }
