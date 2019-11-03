@@ -5,13 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
-      <HintPath>..\..\..\..\..\..\..\usr\share\dotnet\packs\Microsoft.AspNetCore.App.Ref\3.0.0\ref\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\shared\PlumPack.Infrastructure\PlumPack.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\shared\PlumPack.Infrastructure\PlumPack.Infrastructure.csproj" />
+    <PackageReference Include="PayPalCheckoutSdk" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

@@ -10,5 +10,7 @@ namespace PlumPack.Wallet.PayPal
         public string ClientId { get; set; }
         
         public string Secret { get; set; }
+        
+        public bool Sandbox { get; set; }
     }
 }

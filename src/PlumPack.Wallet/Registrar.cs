@@ -15,6 +15,8 @@ namespace PlumPack.Wallet
             
             // Add all the services in this assembly.
             Infrastructure.ServiceContext.AddServicesFromAssembly(typeof(Account).Assembly, services);
+
+            var d = configuration.GetSection("PayPal");
             
             // Configure some options
             services.Configure<PayPalOptions>(configuration.GetSection("PayPal"));

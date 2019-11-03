@@ -81,56 +81,26 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/styles.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/scripts.ts");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./shared/src/common.js":
-/*!******************************!*\
-  !*** ./shared/src/common.js ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/scripts.ts":
+/*!************************!*\
+  !*** ./src/scripts.ts ***!
+  \************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// Shameless: https://icons8.com/icons/set/plum
-__webpack_require__(/*! ./images/plum-96.png */ "./shared/src/images/plum-96.png");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+!(function webpackMissingModule() { var e = new Error("Cannot find module './scripts/api'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 
-/***/ }),
 
-/***/ "./shared/src/images/plum-96.png":
-/*!***************************************!*\
-  !*** ./shared/src/images/plum-96.png ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/plum-96.png";
-
-/***/ }),
-
-/***/ "./src/styles.js":
-/*!***********************!*\
-  !*** ./src/styles.js ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(/*! plumpack-assets/src/common.js */ "./shared/src/common.js");
-__webpack_require__(/*! ./styles.scss */ "./src/styles.scss");
-
-/***/ }),
-
-/***/ "./src/styles.scss":
-/*!*************************!*\
-  !*** ./src/styles.scss ***!
-  \*************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
+window.api = !(function webpackMissingModule() { var e = new Error("Cannot find module './scripts/api'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 
 /***/ })
 
 /******/ });
-//# sourceMappingURL=styles.js.map
+//# sourceMappingURL=scripts.js.map
