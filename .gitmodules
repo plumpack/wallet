@@ -5,5 +5,5 @@
 	path = build/Build/Common
 	url = https://github.com/plumpack/build-common.git
 [submodule "assets/shared"]
-	path = assets/shared
+	path = assets/plumpack-assets
 	url = https://github.com/plumpack/assets.git

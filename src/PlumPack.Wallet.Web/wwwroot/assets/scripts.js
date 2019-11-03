@@ -90,15 +90,39 @@
 /*!************************!*\
   !*** ./src/scripts.ts ***!
   \************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module './scripts/api'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+
+exports.__esModule = true;
+var api_1 = __webpack_require__(/*! ./scripts/api */ "./src/scripts/api.ts");
+console.log(new api_1["default"]().test());
+//window.api = api;
 
 
-window.api = !(function webpackMissingModule() { var e = new Error("Cannot find module './scripts/api'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/***/ }),
+
+/***/ "./src/scripts/api.ts":
+/*!****************************!*\
+  !*** ./src/scripts/api.ts ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var Test = /** @class */ (function () {
+    function Test() {
+    }
+    Test.prototype.test = function () {
+        return "sdf";
+    };
+    return Test;
+}());
+exports["default"] = Test;
+
 
 /***/ })
 

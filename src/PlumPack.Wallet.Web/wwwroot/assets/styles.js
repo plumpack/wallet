@@ -86,22 +86,22 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./shared/src/common.js":
-/*!******************************!*\
-  !*** ./shared/src/common.js ***!
-  \******************************/
+/***/ "../plumpack-assets/src/common.js":
+/*!****************************************!*\
+  !*** ../plumpack-assets/src/common.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Shameless: https://icons8.com/icons/set/plum
-__webpack_require__(/*! ./images/plum-96.png */ "./shared/src/images/plum-96.png");
+__webpack_require__(/*! ./images/plum-96.png */ "../plumpack-assets/src/images/plum-96.png");
 
 /***/ }),
 
-/***/ "./shared/src/images/plum-96.png":
-/*!***************************************!*\
-  !*** ./shared/src/images/plum-96.png ***!
-  \***************************************/
+/***/ "../plumpack-assets/src/images/plum-96.png":
+/*!*************************************************!*\
+  !*** ../plumpack-assets/src/images/plum-96.png ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -116,7 +116,7 @@ module.exports = __webpack_require__.p + "images/plum-96.png";
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! plumpack-assets/src/common.js */ "./shared/src/common.js");
+__webpack_require__(/*! plumpack-assets/src/common.js */ "../plumpack-assets/src/common.js");
 __webpack_require__(/*! ./styles.scss */ "./src/styles.scss");
 
 /***/ }),
