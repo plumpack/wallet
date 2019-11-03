@@ -1,7 +1,8 @@
-using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PlumPack.Infrastructure.Migrations;
+using PlumPack.Wallet.Domain;
+using PlumPack.Wallet.PayPal;
+using SharpDataAccess.Migrations;
 
 namespace PlumPack.Wallet
 {
@@ -14,6 +15,9 @@ namespace PlumPack.Wallet
             
             // Add all the services in this assembly.
             Infrastructure.ServiceContext.AddServicesFromAssembly(typeof(Account).Assembly, services);
+            
+            // Configure some options
+            services.Configure<PayPalOptions>(configuration.GetSection("PayPal"));
         }
     }
 }
