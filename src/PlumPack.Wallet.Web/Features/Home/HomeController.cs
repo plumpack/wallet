@@ -8,7 +8,7 @@ namespace PlumPack.Wallet.Web.Features.Home
     {
         public ActionResult Index()
         {
-            return Ok();
+            return RedirectToAction("Index", "Account");
         }
     }
 }

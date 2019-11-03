@@ -1,0 +1,13 @@
+{
+  "name": "assets",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack",
+    "dev": "./node_modules/.bin/webpack -w"
+  },
+  "dependencies": {
+    "plumpack-assets": "./shared"
+  }
+}

@@ -25,7 +25,10 @@ namespace PlumPack.Wallet.Web
             Registrar.Register(services, Configuration, "/etc/plumpack/wallet/");
             
             services.AddIdentityServerClientServices(Configuration);
-            services.AddControllersWithViews();
+   
+            services.PlumPack(Env)
+                .AddControllersWithViews()
+                .AddValidators(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
