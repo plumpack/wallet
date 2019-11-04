@@ -1,3 +1,4 @@
+var PlumPack =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -81,27 +82,27 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/styles.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/styles/styles.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "../plumpack-assets/src/common.js":
-/*!****************************************!*\
-  !*** ../plumpack-assets/src/common.js ***!
-  \****************************************/
+/***/ "../plumpack-assets/src/styles/common.js":
+/*!***********************************************!*\
+  !*** ../plumpack-assets/src/styles/common.js ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Shameless: https://icons8.com/icons/set/plum
-__webpack_require__(/*! ./images/plum-96.png */ "../plumpack-assets/src/images/plum-96.png");
+__webpack_require__(/*! ./images/plum-96.png */ "../plumpack-assets/src/styles/images/plum-96.png");
 
 /***/ }),
 
-/***/ "../plumpack-assets/src/images/plum-96.png":
-/*!*************************************************!*\
-  !*** ../plumpack-assets/src/images/plum-96.png ***!
-  \*************************************************/
+/***/ "../plumpack-assets/src/styles/images/plum-96.png":
+/*!********************************************************!*\
+  !*** ../plumpack-assets/src/styles/images/plum-96.png ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -109,22 +110,22 @@ module.exports = __webpack_require__.p + "images/plum-96.png";
 
 /***/ }),
 
-/***/ "./src/styles.js":
-/*!***********************!*\
-  !*** ./src/styles.js ***!
-  \***********************/
+/***/ "./src/styles/styles.js":
+/*!******************************!*\
+  !*** ./src/styles/styles.js ***!
+  \******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! plumpack-assets/src/common.js */ "../plumpack-assets/src/common.js");
-__webpack_require__(/*! ./styles.scss */ "./src/styles.scss");
+__webpack_require__(/*! plumpack-assets/src/styles/common.js */ "../plumpack-assets/src/styles/common.js");
+__webpack_require__(/*! ./styles.scss */ "./src/styles/styles.scss");
 
 /***/ }),
 
-/***/ "./src/styles.scss":
-/*!*************************!*\
-  !*** ./src/styles.scss ***!
-  \*************************/
+/***/ "./src/styles/styles.scss":
+/*!********************************!*\
+  !*** ./src/styles/styles.scss ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

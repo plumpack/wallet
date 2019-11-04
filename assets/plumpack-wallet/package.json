@@ -2,5 +2,8 @@
   "name": "plumpack-wallet",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "plumpack-assets": "1.0.0"
+  }
 }

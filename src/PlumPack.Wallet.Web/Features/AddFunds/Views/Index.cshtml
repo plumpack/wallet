@@ -10,12 +10,8 @@
     paypal.Buttons({
         createOrder: function(data, actions) {
             // Set up the transaction
-            return actions.order.create({
-                purchase_units: [{
-                    amount: {
-                        value: '0.01'
-                    }
-                }]
+            return PlumPack.Wallet.payPal().createTransaction(23).then(x => {
+                return x.orderId;
             });
         }
     }).render('#paypal-button-container');
