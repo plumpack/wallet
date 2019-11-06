@@ -12,6 +12,12 @@ namespace PlumPack.Wallet.Domain
         [Alias("paypal_order_id"), Required]
         public string PayPalOrderId { get; set; }
         
+        [Alias("paypal_payer_id")]
+        public string PayPalPayerId { get; set; }
+        
+        [Alias("paypal_order_json")]
+        public string PayPalOrderJson { get; set; }
+        
         [Alias("account_id"), Required]
         [References(typeof(Account))]
         public Guid AccountId { get; set; }

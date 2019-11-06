@@ -10,9 +10,15 @@
     paypal.Buttons({
         createOrder: function(data, actions) {
             // Set up the transaction
-            return PlumPack.Wallet.payPal().createOrder(23).then(x => {
+            return PlumPack.Wallet.payPal().createOrder(23).then(function(x) {
                 return x.orderId;
             });
+        },
+        onCancel: function (data) {
+            console.log("cancel: " + JSON.stringify(data));
+        },
+        onApprove: function(data) {
+            return PlumPack.Wallet.payPal().captureOrder(data.orderID, data.payerID);
         }
     }).render('#paypal-button-container');
 </script>

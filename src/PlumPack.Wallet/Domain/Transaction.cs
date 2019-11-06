@@ -15,5 +15,11 @@ namespace PlumPack.Wallet.Domain
         
         [Alias("amount"), Required]
         public decimal Amount { get; set; }
+        
+        [Alias("title"), Required]
+        public string Title { get; set; }
+        
+        [Alias("meta_data")]
+        public string MetaData { get; set; }
     }
 }

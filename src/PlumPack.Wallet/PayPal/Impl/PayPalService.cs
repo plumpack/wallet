@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PayPalCheckoutSdk.Core;
 using PayPalCheckoutSdk.Orders;
 using PlumPack.Infrastructure;
 using PlumPack.Wallet.Accounts;
 using PlumPack.Wallet.Domain;
+using PlumPack.Wallet.Transactions;
 using ServiceStack.OrmLite;
 using SharpDataAccess.Data;
 
@@ -23,18 +27,21 @@ namespace PlumPack.Wallet.PayPal.Impl
         private readonly ILogger<PayPalService> _logger;
         private readonly IAccountsService _accountsService;
         private readonly IDataService _dataService;
+        private readonly ITransactionsService _transactionsService;
 
         public PayPalService(IPayPalClientProvider payPalClientProvider,
             IOptions<PayPalOptions> options,
             ILogger<PayPalService> logger,
             IAccountsService accountsService,
-            IDataService dataService)
+            IDataService dataService,
+            ITransactionsService transactionsService)
         {
             _payPalClientProvider = payPalClientProvider;
             _options = options;
             _logger = logger;
             _accountsService = accountsService;
             _dataService = dataService;
+            _transactionsService = transactionsService;
         }
 
         public string ClientId => _options.Value.ClientId;
@@ -81,7 +88,7 @@ namespace PlumPack.Wallet.PayPal.Impl
 
                 if (response.StatusCode != HttpStatusCode.Created)
                 {
-                    _logger.LogError("Invalid status code from PayPal: status: {@Status} response: {@Response}", response.StatusCode, response.Result<object>());
+                    _logger.LogError("Invalid status code from PayPal order create: status: {Status} response: {Response}", response.StatusCode, SerializePayPalType(response.Result<object>()));
                     throw new Exception("Invalid PayPal response");
                 }
 
@@ -101,6 +108,60 @@ namespace PlumPack.Wallet.PayPal.Impl
                 await con.Connection.InsertAsync(pendingOrder);
 
                 return pendingOrder;
+            }
+        }
+
+        public async Task CapturePendingOrder(string orderId, string payerId)
+        {
+            Order order;
+            {
+                var client = _payPalClientProvider.BuildHttpClient();
+                var request = new OrdersCaptureRequest(orderId);
+                request.RequestBody(new OrderActionRequest());
+                var response = await client.Execute(request);
+
+                if (response.StatusCode != HttpStatusCode.Created)
+                {
+                    _logger.LogError("Invalid status code from PayPal order capture: status: {Status} response: {Response}", response.StatusCode, SerializePayPalType(response.Result<object>()));
+                    throw new Exception("Invalid PayPal response");
+                }
+
+                order = response.Result<Order>();
+
+                if (order.Status != "COMPLETED")
+                {
+                    _logger.LogError("The order from PayPal wasn't marked as COMPELTED: {Response}", SerializePayPalType(response.Result<object>()));
+                    throw new Exception("The order from PayPal wasn't marked as COMPELTED");
+                }
+            }
+
+            using (var con = new ConScope(_dataService))
+            using (var trans = await con.BeginTransaction())
+            {
+                var pendingOrder = con.Connection.Single<PendingPayPalOrder>(x => x.PayPalOrderId == orderId);
+                pendingOrder.PayPalPayerId = payerId;
+                pendingOrder.PayPalOrderJson = SerializePayPalType(order);
+                
+                await con.Connection.SaveAsync(pendingOrder);
+
+                await _transactionsService.AddTransaction(pendingOrder.AccountId, pendingOrder.Amount, "PayPal reload", pendingOrder.PayPalOrderJson);
+                
+                trans.Commit();
+            }
+        }
+
+        private string SerializePayPalType(object value)
+        {
+            value.NotNull();
+            
+            using (var memoryStream = new MemoryStream())
+            {
+                new DataContractJsonSerializer(value.GetType()).WriteObject(memoryStream, value);
+                memoryStream.Position = 0;
+                using (var streamReader = new StreamReader(memoryStream))
+                {
+                    return streamReader.ReadToEnd();
+                }
             }
         }
     }

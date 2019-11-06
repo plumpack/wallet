@@ -38,5 +38,13 @@ namespace PlumPack.Wallet.Web.Features.PayPal
                 OrderId = pendingOrder.PayPalOrderId
             };
         }
+
+        [HttpPost]
+        [Route("capture-order")]
+        public async Task<CaptureOrderResponse> CaptureOrder([FromBody]CaptureOrderRequest request)
+        {
+            await _payPalService.CapturePendingOrder(request.OrderId, request.PayerId);
+            return new CaptureOrderResponse();
+        }
     }
 }
