@@ -1,5 +1,7 @@
+using System;
 using System.Threading.Tasks;
 using PayPalCheckoutSdk.Orders;
+using PlumPack.Wallet.Domain;
 
 namespace PlumPack.Wallet.PayPal
 {
@@ -7,6 +9,6 @@ namespace PlumPack.Wallet.PayPal
     {
         string ClientId { get; }
 
-        Task<Order> CreateTransaction();
+        Task<PendingPayPalOrder> CreatePendingOrder(Guid accountId, decimal amount);
     }
 }

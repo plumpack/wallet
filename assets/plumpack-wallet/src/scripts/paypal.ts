@@ -1,11 +1,11 @@
 import Api from "plumpack-assets/src/scripts/api";
 
-interface CreateTransactionResponse {
-
+interface CreateOrderResponse {
+    orderId: string;
 }
 
-interface CreateTransactionRequest {
-
+interface CreateOrderRequest {
+    amount: number;
 }
 
 export default class PayPal {
@@ -13,8 +13,10 @@ export default class PayPal {
     constructor(api: Api) {
         this._api = api;
     }
-    public async createTransaction(amount: any): Promise<CreateTransactionResponse> {
-        var r = await this._api.post<CreateTransactionRequest, CreateTransactionResponse>("/api/paypal/create-transaction", {});
+    public async createOrder(amount: any): Promise<CreateOrderResponse> {
+        var r = await this._api.post<CreateOrderRequest, CreateOrderResponse>("/api/paypal/create-order", {
+            amount: amount
+        });
         return r;
     }
 }

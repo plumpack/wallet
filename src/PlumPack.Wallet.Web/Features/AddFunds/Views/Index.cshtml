@@ -10,7 +10,7 @@
     paypal.Buttons({
         createOrder: function(data, actions) {
             // Set up the transaction
-            return PlumPack.Wallet.payPal().createTransaction(23).then(x => {
+            return PlumPack.Wallet.payPal().createOrder(23).then(x => {
                 return x.orderId;
             });
         }

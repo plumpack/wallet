@@ -1752,12 +1752,14 @@ var PayPal = /** @class */ (function () {
     function PayPal(api) {
         this._api = api;
     }
-    PayPal.prototype.createTransaction = function (amount) {
+    PayPal.prototype.createOrder = function (amount) {
         return __awaiter(this, void 0, void 0, function () {
             var r;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._api.post("/api/paypal/create-transaction", {})];
+                    case 0: return [4 /*yield*/, this._api.post("/api/paypal/create-order", {
+                            amount: amount
+                        })];
                     case 1:
                         r = _a.sent();
                         return [2 /*return*/, r];

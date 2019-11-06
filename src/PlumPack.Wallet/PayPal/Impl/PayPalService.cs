@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -7,6 +8,10 @@ using Microsoft.Extensions.Options;
 using PayPalCheckoutSdk.Core;
 using PayPalCheckoutSdk.Orders;
 using PlumPack.Infrastructure;
+using PlumPack.Wallet.Accounts;
+using PlumPack.Wallet.Domain;
+using ServiceStack.OrmLite;
+using SharpDataAccess.Data;
 
 namespace PlumPack.Wallet.PayPal.Impl
 {
@@ -16,153 +21,87 @@ namespace PlumPack.Wallet.PayPal.Impl
         private readonly IPayPalClientProvider _payPalClientProvider;
         private readonly IOptions<PayPalOptions> _options;
         private readonly ILogger<PayPalService> _logger;
+        private readonly IAccountsService _accountsService;
+        private readonly IDataService _dataService;
 
-        public PayPalService(IPayPalClientProvider payPalClientProvider, IOptions<PayPalOptions> options,
-            ILogger<PayPalService> logger)
+        public PayPalService(IPayPalClientProvider payPalClientProvider,
+            IOptions<PayPalOptions> options,
+            ILogger<PayPalService> logger,
+            IAccountsService accountsService,
+            IDataService dataService)
         {
             _payPalClientProvider = payPalClientProvider;
             _options = options;
             _logger = logger;
+            _accountsService = accountsService;
+            _dataService = dataService;
         }
 
         public string ClientId => _options.Value.ClientId;
 
-        public async Task<Order> CreateTransaction()
+
+        public async Task<PendingPayPalOrder> CreatePendingOrder(Guid accountId, decimal amount)
         {
-            var client = _payPalClientProvider.BuildHttpClient();
-            
-            var request = new OrdersCreateRequest();
-            request.Prefer("return=representation");
-            request.RequestBody(new OrderRequest
+            // TODO: Make this range configurable.
+            if (amount <= 0 || amount > 500)
             {
-                CheckoutPaymentIntent = "CAPTURE",
-                PurchaseUnits = new List<PurchaseUnitRequest>
+                throw new Exception("Invalid amount.");
+            }
+         
+            _logger.LogInformation("Creating pending paypal order for {AccountId} for {Amount}", accountId, amount);
+            
+            var account = await _accountsService.GetAccount(AccountIdentification.ById(accountId));
+            account.NotNull();
+
+            var potentialOrderId = Guid.NewGuid();
+            string paypalOrderId;
+            
+            {
+                var client = _payPalClientProvider.BuildHttpClient();
+                var request = new OrdersCreateRequest();
+                request.Prefer("return=representation");
+                request.RequestBody(new OrderRequest
                 {
-                    new PurchaseUnitRequest
+                    CheckoutPaymentIntent = "CAPTURE",
+                    PurchaseUnits = new List<PurchaseUnitRequest>
                     {
-                        AmountWithBreakdown = new AmountWithBreakdown
+                        new PurchaseUnitRequest
                         {
-                            Value = "23.00",
-                            CurrencyCode = "USD"
+                            ReferenceId = potentialOrderId.ToString(),
+                            AmountWithBreakdown = new AmountWithBreakdown
+                            {
+                                Value = amount.ToString(CultureInfo.InvariantCulture),
+                                CurrencyCode = "USD"
+                            }
                         }
                     }
+                });
+                
+                var response = await client.Execute(request);
+
+                if (response.StatusCode != HttpStatusCode.Created)
+                {
+                    _logger.LogError("Invalid status code from PayPal: status: {@Status} response: {@Response}", response.StatusCode, response.Result<object>());
+                    throw new Exception("Invalid PayPal response");
                 }
-            });
-            
-//            ApplicationContext = new ApplicationContext
-//  {
-//    BrandName = "EXAMPLE INC",
-//    LandingPage = "BILLING",
-//    UserAction = "CONTINUE",
-//    ShippingPreference = "SET_PROVIDED_ADDRESS"
-//  },
-//  PurchaseUnits = new List<PurchaseUnitRequest>
-//  {
-//    new PurchaseUnitRequest{
-//      ReferenceId =  "PUHF",
-//      Description = "Sporting Goods",
-//      CustomId = "CUST-HighFashions",
-//      SoftDescriptor = "HighFashions",
-//      Amount = new AmountWithBreakdown
-//      {
-//        CurrencyCode = "USD",
-//        Value = "230.00",
-//        Breakdown = new AmountBreakdown
-//        {
-//          ItemTotal = new Money
-//          {
-//            CurrencyCode = "USD",
-//            Value = "180.00"
-//          },
-//          Shipping = new Money
-//          {
-//            CurrencyCode = "USD",
-//            Value = "30.00"
-//          },
-//          Handling = new Money
-//          {
-//            CurrencyCode = "USD",
-//            Value = "10.00"
-//          },
-//          TaxTotal = new Money
-//          {
-//            CurrencyCode = "USD",
-//            Value = "20.00"
-//          },
-//          ShippingDiscount = new Money
-//          {
-//            CurrencyCode = "USD",
-//            Value = "10.00"
-//          }
-//        }
-//      },
-//      Items = new List<Item>
-//      {
-//        new Item
-//        {
-//          Name = "T-shirt",
-//          Description = "Green XL",
-//          Sku = "sku01",
-//          UnitAmount = new Money
-//          {
-//            CurrencyCode = "USD",
-//            Value = "90.00"
-//          },
-//          Tax = new Money
-//          {
-//            CurrencyCode = "USD",
-//            Value = "10.00"
-//          },
-//          Quantity = "1",
-//          Category = "PHYSICAL_GOODS"
-//        },
-//        new Item
-//        {
-//          Name = "Shoes",
-//          Description = "Running, Size 10.5",
-//          Sku = "sku02",
-//          UnitAmount = new Money
-//          {
-//            CurrencyCode = "USD",
-//            Value = "45.00"
-//          },
-//          Tax = new Money
-//          {
-//            CurrencyCode = "USD",
-//            Value = "5.00"
-//          },
-//          Quantity = "2",
-//          Category = "PHYSICAL_GOODS"
-//        }
-//      },
-//      Shipping = new ShippingDetails
-//      {
-//        Name = new Name
-//        {
-//          FullName = "John Doe"
-//        },
-//        AddressPortable = new AddressPortable
-//        {
-//          AddressLine1 = "123 Townsend St",
-//          AddressLine2 = "Floor 6",
-//          AdminArea2 = "San Francisco",
-//          AdminArea1 = "CA",
-//          PostalCode = "94107",
-//          CountryCode = "US"
-//        }
-//      }
-//    }
-//  }
-            
-            var response = await client.Execute(request);
 
-            if (response.StatusCode != HttpStatusCode.Created)
-            {
-                _logger.LogError("Invalid status code from PayPal: status: {@Status} response: {@Response}", response.StatusCode, response.Result<object>());
-                throw new Exception("Invalid PayPal response");
+                paypalOrderId = response.Result<Order>().Id;
             }
+            
+            // Great, we created a PayPal order, let's add the record into the database.
+            using (var con = new ConScope(_dataService))
+            {
+                var pendingOrder = new PendingPayPalOrder
+                {
+                    Id = potentialOrderId,
+                    PayPalOrderId = paypalOrderId,
+                    AccountId = account.Id,
+                    Amount = amount
+                };
+                await con.Connection.InsertAsync(pendingOrder);
 
-            return response.Result<Order>();
+                return pendingOrder;
+            }
         }
     }
 }

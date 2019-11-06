@@ -9,19 +9,10 @@ namespace PlumPack.Wallet.Migrations
     {
         public void Run(IDbConnection connection)
         {
-            connection.ExecuteSql(@"
-CREATE TABLE ""accounts""
-(
-    ""id"" TEXT PRIMARY KEY 
-); 
-");
-            connection.ExecuteSql(@"
-CREATE TABLE ""transactions"" 
-(
-""id"" TEXT PRIMARY KEY, 
-""amount"" DECIMAL(38,6) NOT NULL 
-); 
-"); 
+            // TODO: Fix this migration to not be dynamic.
+            connection.CreateTable<Account>();
+            connection.CreateTable<Transaction>();
+            connection.CreateTable<PendingPayPalOrder>();
         }
 
         public int Version => Versions.InitialTypes;
