@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <!--Needed for runtime compilation of razor views: https://github.com/aspnet/AspNetCore/issues/8416-->
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
   </PropertyGroup>
 
 

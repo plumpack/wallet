@@ -4,6 +4,22 @@
     src="https://www.paypal.com/sdk/js?client-id=@(Model.PayPalClientId)">
 </script>
 
+
+<form>
+    <input id="demo" v-currency="{currency: 'USD', locale: 'en'}" v-model="value" />
+</form>
+
+<script>
+    PlumPack.Wallet.currencyInput("#demo", "en", "USD", 344, function(newValue) {
+        if(newValue === 0) {
+            console.log("what?");
+        }
+        console.log(newValue);
+    });
+    // var r = PlumPack.Wallet.test("#demo");
+    // window.r = r;
+</script>
+
 <div id="paypal-button-container"></div>
 
 <script>
