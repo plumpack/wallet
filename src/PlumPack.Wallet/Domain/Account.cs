@@ -11,5 +11,8 @@ namespace PlumPack.Wallet.Domain
         
         [Alias("global_user_id"), Required]
         public Guid GlobalUserId { get; set; }
+        
+        [Alias("current_balance"), Required]
+        public decimal CurrentBalance { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace PlumPack.Wallet.Transactions.Impl
         public async Task<Transaction> AddTransaction(Guid accountId, decimal amount, string title, string metaData, Guid? payPalOrderId)
         {
             using (var con = new ConScope(_dataService))
+            using (var trans = await con.BeginTransaction())
             {
                 var transaction = new Transaction
                 {
@@ -32,6 +33,17 @@ namespace PlumPack.Wallet.Transactions.Impl
 
                 await con.Connection.SaveAsync(transaction);
 
+                // Let's update the total on the account object.
+                var runningTotal = await con.Connection.SingleAsync<decimal>(
+                    con.Connection.From<Transaction>()
+                        .Select(x => new {
+                            Sum = Sql.Sum(x.Amount)
+                        }));
+                
+                await con.Connection.UpdateOnlyAsync(() => new Account{CurrentBalance = runningTotal}, x => x.Id == accountId);
+                
+                trans.Commit();
+                
                 return transaction;
             }
         }
