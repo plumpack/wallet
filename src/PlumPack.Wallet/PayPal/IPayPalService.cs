@@ -10,8 +10,10 @@ namespace PlumPack.Wallet.PayPal
     {
         string ClientId { get; }
 
-        Task<PendingPayPalOrder> CreatePendingOrder(Guid accountId, decimal amount);
+        Task<PayPalOrder> CreatePendingOrder(Guid accountId, decimal amount);
 
         Task CapturePendingOrder(string orderId, string payerId);
+
+        Task CancelPendingOrder(string orderId);
     }
 }

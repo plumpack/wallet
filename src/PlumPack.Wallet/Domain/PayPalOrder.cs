@@ -3,11 +3,14 @@ using ServiceStack.DataAnnotations;
 
 namespace PlumPack.Wallet.Domain
 {
-    [Alias("pending_paypal_order")]
-    public class PendingPayPalOrder
+    [Alias("paypal_orders")]
+    public class PayPalOrder
     {
         [Alias("id"), PrimaryKey, AutoId, Required]
         public Guid Id { get; set; }
+        
+        [Alias("order_status"), Required]
+        public PayPalOrderStatus OrderStatus { get; set; }
         
         [Alias("paypal_order_id"), Required]
         public string PayPalOrderId { get; set; }
@@ -24,5 +27,12 @@ namespace PlumPack.Wallet.Domain
         
         [Alias("amount"), Required]
         public decimal Amount { get; set; }
+    }
+
+    [EnumAsInt]
+    public enum PayPalOrderStatus
+    {
+        Pending,
+        Completed
     }
 }

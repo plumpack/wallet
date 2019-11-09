@@ -25,7 +25,7 @@ namespace PlumPack.Wallet.Web
             Registrar.Register(services, Configuration, "/etc/plumpack/wallet/");
             
             services.AddIdentityServerClientServices(Configuration);
-   
+
             services.PlumPack(Env)
                 .AddControllersWithViews()
                 .AddValidators(typeof(Startup).Assembly);
@@ -35,13 +35,14 @@ namespace PlumPack.Wallet.Web
         public void Configure(IApplicationBuilder app)
         {
             app.PlumPack(Env).UseExceptionPage().UseStaticFiles();
-
+            
             app.UseRouting();
             
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseIdentityServerClient();
+  
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

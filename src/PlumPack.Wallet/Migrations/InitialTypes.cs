@@ -11,8 +11,8 @@ namespace PlumPack.Wallet.Migrations
         {
             // TODO: Fix this migration to not be dynamic.
             connection.CreateTable<Account>();
+            connection.CreateTable<PayPalOrder>();
             connection.CreateTable<Transaction>();
-            connection.CreateTable<PendingPayPalOrder>();
         }
 
         public int Version => Versions.InitialTypes;

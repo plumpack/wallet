@@ -47,7 +47,7 @@ namespace PlumPack.Wallet.PayPal.Impl
         public string ClientId => _options.Value.ClientId;
 
 
-        public async Task<PendingPayPalOrder> CreatePendingOrder(Guid accountId, decimal amount)
+        public async Task<PayPalOrder> CreatePendingOrder(Guid accountId, decimal amount)
         {
             // TODO: Make this range configurable.
             if (amount <= 0 || amount > 500)
@@ -98,13 +98,15 @@ namespace PlumPack.Wallet.PayPal.Impl
             // Great, we created a PayPal order, let's add the record into the database.
             using (var con = new ConScope(_dataService))
             {
-                var pendingOrder = new PendingPayPalOrder
+                var pendingOrder = new PayPalOrder
                 {
                     Id = potentialOrderId,
+                    OrderStatus = PayPalOrderStatus.Pending,
                     PayPalOrderId = paypalOrderId,
                     AccountId = account.Id,
                     Amount = amount
                 };
+                
                 await con.Connection.InsertAsync(pendingOrder);
 
                 return pendingOrder;
@@ -138,18 +140,47 @@ namespace PlumPack.Wallet.PayPal.Impl
             using (var con = new ConScope(_dataService))
             using (var trans = await con.BeginTransaction())
             {
-                var pendingOrder = con.Connection.Single<PendingPayPalOrder>(x => x.PayPalOrderId == orderId);
+                var pendingOrder = con.Connection.Single<PayPalOrder>(x => x.PayPalOrderId == orderId);
+
+                if (pendingOrder.OrderStatus == PayPalOrderStatus.Completed)
+                {
+                    throw new Exception($"Attempted to update order {orderId} as completed, but it is already marked as completed.");
+                }
+                
+                pendingOrder.OrderStatus = PayPalOrderStatus.Completed;
                 pendingOrder.PayPalPayerId = payerId;
                 pendingOrder.PayPalOrderJson = SerializePayPalType(order);
                 
                 await con.Connection.SaveAsync(pendingOrder);
 
-                await _transactionsService.AddTransaction(pendingOrder.AccountId, pendingOrder.Amount, "PayPal reload", pendingOrder.PayPalOrderJson);
+                await _transactionsService.AddTransaction(pendingOrder.AccountId, pendingOrder.Amount, "PayPal reload", pendingOrder.PayPalOrderJson, pendingOrder.Id);
                 
                 trans.Commit();
             }
         }
 
+        public async Task CancelPendingOrder(string orderId)
+        {
+            using (var con = new ConScope(_dataService))
+            using (var trans = await con.BeginTransaction())
+            {
+                var pendingOrder = await con.Connection.SingleAsync<PayPalOrder>(x => x.PayPalOrderId == orderId);
+                if (pendingOrder == null)
+                {
+                    throw new Exception($"No pending paypal order to cancel with id {orderId}");
+                }
+
+                if (pendingOrder.OrderStatus == PayPalOrderStatus.Completed)
+                {
+                    throw new Exception($"The order {orderId} was already completed.");
+                }
+
+                await con.Connection.DeleteByIdAsync<PayPalOrder>(pendingOrder.Id);
+                
+                trans.Commit();
+            }
+        }
+        
         private string SerializePayPalType(object value)
         {
             value.NotNull();

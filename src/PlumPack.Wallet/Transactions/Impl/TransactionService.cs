@@ -17,7 +17,7 @@ namespace PlumPack.Wallet.Transactions.Impl
             _dataService = dataService;
         }
         
-        public async Task<Transaction> AddTransaction(Guid accountId, decimal amount, string title, string metaData)
+        public async Task<Transaction> AddTransaction(Guid accountId, decimal amount, string title, string metaData, Guid? payPalOrderId)
         {
             using (var con = new ConScope(_dataService))
             {
@@ -26,7 +26,8 @@ namespace PlumPack.Wallet.Transactions.Impl
                     AccountId = accountId,
                     Amount = amount,
                     Title = title,
-                    MetaData = metaData
+                    MetaData = metaData,
+                    PayPalOrderId = payPalOrderId
                 };
 
                 await con.Connection.SaveAsync(transaction);

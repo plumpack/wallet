@@ -6,6 +6,6 @@ namespace PlumPack.Wallet.Transactions
 {
     public interface ITransactionsService
     {
-        Task<Transaction> AddTransaction(Guid accountId, decimal amount, string title, string metaData);
+        Task<Transaction> AddTransaction(Guid accountId, decimal amount, string title, string metaData, Guid? payPalOrderId);
     }
 }

@@ -21,5 +21,9 @@ namespace PlumPack.Wallet.Domain
         
         [Alias("meta_data")]
         public string MetaData { get; set; }
+        
+        [Alias("paypal_order_id")]
+        [References(typeof(PayPalOrder))]
+        public Guid? PayPalOrderId { get; set; }
     }
 }

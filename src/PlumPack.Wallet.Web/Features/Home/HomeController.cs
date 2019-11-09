@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace PlumPack.Wallet.Web.Features.Home
     {
         public ActionResult Index()
         {
+            TempData.Keep(); // Preserve success messages.
             return RedirectToAction("Index", "AddFunds");
         }
     }

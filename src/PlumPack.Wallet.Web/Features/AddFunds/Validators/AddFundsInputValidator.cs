@@ -1,11 +1,11 @@
 using FluentValidation;
-using PlumPack.Wallet.Web.Features.Account.Models;
+using PlumPack.Wallet.Web.Features.AddFunds.Models;
 
-namespace PlumPack.Wallet.Web.Features.Account.Validators
+namespace PlumPack.Wallet.Web.Features.AddFunds.Validators
 {
-    public class AddFundsInputValidator : AbstractValidator<AddFundsInputModel>
+    public class SpecifyAmountInputValidator : AbstractValidator<SpecifyAmountInputModel>
     {
-        public AddFundsInputValidator()
+        public SpecifyAmountInputValidator()
         {
             // You can only add between 25 dollars and 1000 dollars at a time.
             // TODO: Make configurable
