@@ -1,0 +1,12 @@
+@{
+    Layout = $"_Layout";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        @await Component.InvokeAsync("SideBar", new {selectedTab = ViewBag.SelectedWalletTab})
+    </div>
+    <div class="col-md-8">
+        @RenderBody()
+    </div>
+</div>

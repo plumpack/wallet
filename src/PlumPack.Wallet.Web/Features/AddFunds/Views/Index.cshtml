@@ -1,5 +1,9 @@
 @model SpecifyAmountViewModel
 
+@{
+    ViewBag.SelectedWalletTab = "transfer-money";
+}
+
 <form asp-action="Index">
     <partial name="_ValidationSummary"></partial>
     <div class="form-group">

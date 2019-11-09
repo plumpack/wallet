@@ -1,0 +1,29 @@
+@model PlumPack.Wallet.Web.ViewComponents.SideBar.Models.SideBarViewModel
+
+<div class="card">
+    <div class="card-header py-3">
+        <span class="h6">Settings</span>
+    </div>
+    <div class="list-group">
+        <a asp-controller="Activity" asp-action="Index" class="list-group-item  list-group-item-action @(Model.SelectedTab == "activity" ? "active" : "") d-flex justify-content-between">
+            <div>
+                <i class="fa fa-bars mr-2"></i>
+                <span>Activity</span>
+            </div>
+            <div>
+                <i class="fa fa-angle-right"></i>
+            </div>
+        </a>
+    </div>
+    <div class="list-group">
+        <a asp-controller="Transfer" asp-action="Index" class="list-group-item  list-group-item-action @(Model.SelectedTab == "transfer-money" ? "active" : "") d-flex justify-content-between">
+            <div>
+                <i class="fa fa-exchange mr-2"></i>
+                <span>Transfer money</span>
+            </div>
+            <div>
+                <i class="fa fa-angle-right"></i>
+            </div>
+        </a>
+    </div>
+</div>

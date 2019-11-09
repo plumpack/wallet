@@ -10,7 +10,7 @@ namespace PlumPack.Wallet.Web.Features.Home
         public ActionResult Index()
         {
             TempData.Keep(); // Preserve success messages.
-            return RedirectToAction("Index", "AddFunds");
+            return RedirectToAction("Index", "Activity");
         }
     }
 }
