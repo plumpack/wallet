@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\shared\PlumPack.IdentityServer.Client\PlumPack.IdentityServer.Client.csproj" />
     <ProjectReference Include="..\..\shared\PlumPack.Infrastructure\PlumPack.Infrastructure.csproj" />
   </ItemGroup>
 

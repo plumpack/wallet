@@ -1,4 +1,6 @@
 import Api from "plumpack-assets/src/scripts/api";
+import "plumpack-assets/src/scripts/web-components";
+
 import PayPal from "./paypal";
 import * as jQuery from "jquery";
 

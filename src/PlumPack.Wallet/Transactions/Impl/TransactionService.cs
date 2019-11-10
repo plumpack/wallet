@@ -25,6 +25,7 @@ namespace PlumPack.Wallet.Transactions.Impl
                 var transaction = new Transaction
                 {
                     AccountId = accountId,
+                    Date = DateTimeOffset.UtcNow,
                     Amount = amount,
                     Title = title,
                     MetaData = metaData,
@@ -45,6 +46,50 @@ namespace PlumPack.Wallet.Transactions.Impl
                 trans.Commit();
                 
                 return transaction;
+            }
+        }
+
+        public async Task<SeekedList<Transaction>> GetTransactions(Guid? accountId = null, int? skip = null, int? take = null)
+        {
+            using (var con = new ConScope(_dataService))
+            {
+                var query = con.Connection.From<Transaction>();
+
+                if (accountId.HasValue)
+                {
+                    query.Where(x => x.AccountId == accountId);
+                }
+                
+                long? count = null;
+                if (!skip.HasValue && !take.HasValue)
+                {
+                    // We are returning all the items, not need to do additional DB query.
+                }
+                else
+                {
+                    count = await con.Connection.CountAsync(query);
+                }
+
+                query.OrderByDescending(x => x.Date);
+                
+                if (skip.HasValue)
+                {
+                    query.Skip(skip.Value);
+                }
+
+                if (take.HasValue)
+                {
+                    query.Take(take.Value);
+                }
+
+                var results = await con.Connection.SelectAsync(query);
+
+                if (!count.HasValue)
+                {
+                    count = results.Count;
+                }
+                
+                return new SeekedList<Transaction>(results, skip, take, count.Value);
             }
         }
     }

@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@github/time-elements@^3.0.8":
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/@github/time-elements/-/time-elements-3.0.8.tgz#347b7e125a84ed8fc1c2c74f276718966a271184"
+  integrity sha512-m/uOsJO6gvPp9VEygkw0+Ct5I3HLoPtomg2uD3Ky+IGkWqkdEVehPaedwzBELw16G22+fdtNb7KT+D7LECvh7Q==
+
 "@types/jquery@^3.3.31":
   version "3.3.31"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.31.tgz#27c706e4bf488474e1cb54a71d8303f37c93451b"

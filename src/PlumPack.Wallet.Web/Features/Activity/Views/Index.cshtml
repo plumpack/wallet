@@ -1,7 +1,40 @@
+@using System.Text.Json
 @model ActivityViewModel
 
 @{
     ViewBag.SelectedWalletTab = "activity";
 }
 
-Acitivity
+<h1 class="page-title">Activity</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Title</th>
+      <th scope="col">Last</th>
+    </tr>
+  </thead>
+  <tbody>
+  @foreach (var transaction in Model.Transactions)
+  {
+    <tr>
+      <th scope="row">
+        <div>
+          
+          @* 2014-04-01T16:30:00-08:00 *@
+          <local-time datetime="@JsonSerializer.Serialize(transaction.Date).Replace("\"", "")"
+                      month="short"
+                      day="numeric"
+                      year="numeric"
+                      hour="numeric"
+                      minute="numeric">
+          </local-time>
+        </div>
+      </th>
+      <td>@transaction.Title</td>
+      <td>@transaction.Amount</td>
+    </tr>
+  }
+  </tbody>
+</table>

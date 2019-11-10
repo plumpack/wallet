@@ -13,6 +13,9 @@ namespace PlumPack.Wallet.Domain
         [References(typeof(Account))]
         public Guid AccountId { get; set; }
         
+        [Alias("date"), Required]
+        public DateTimeOffset Date { get; set; }
+        
         [Alias("amount"), Required]
         public decimal Amount { get; set; }
         
