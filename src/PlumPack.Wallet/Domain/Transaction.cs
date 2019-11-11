@@ -19,6 +19,9 @@ namespace PlumPack.Wallet.Domain
         [Alias("amount"), Required]
         public decimal Amount { get; set; }
         
+        [Alias("current_balance"), Required]
+        public decimal CurrentBalance { get; set; }
+        
         [Alias("title"), Required]
         public string Title { get; set; }
         

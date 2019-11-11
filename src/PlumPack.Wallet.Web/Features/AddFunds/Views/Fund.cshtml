@@ -1,21 +1,22 @@
+@using PlumPack.Infrastructure
 @model FundViewModel
 
 @{
     ViewBag.SelectedWalletTab = "transfer-money";
 }
 
+<h1 class="page-title">Add money</h1>
+
 <div class="form-group">
-    <label asp-for="Amount"></label>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">$</span>
-        </div>
-        <input asp-for="Amount" class="form-control" type="text" readonly>
+    <div class="form-group">
+        <span class="h2">@Model.Amount.ToCurrency()</span>
     </div>
     <div class="form-group">
         <a asp-action="Index" class="btn btn-primary">Change amount</a>
     </div>
 </div>
+
+<h2>Payment method</h2>
 
 <script src="https://www.paypal.com/sdk/js?client-id=@(Model.PayPalClientId)">
 </script>

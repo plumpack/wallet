@@ -22,18 +22,6 @@ namespace PlumPack.Wallet.Transactions.Impl
             using (var con = new ConScope(_dataService))
             using (var trans = await con.BeginTransaction())
             {
-                var transaction = new Transaction
-                {
-                    AccountId = accountId,
-                    Date = DateTimeOffset.UtcNow,
-                    Amount = amount,
-                    Title = title,
-                    MetaData = metaData,
-                    PayPalOrderId = payPalOrderId
-                };
-
-                await con.Connection.SaveAsync(transaction);
-
                 // Let's update the total on the account object.
                 var runningTotal = await con.Connection.SingleAsync<decimal>(
                     con.Connection.From<Transaction>()
@@ -41,6 +29,21 @@ namespace PlumPack.Wallet.Transactions.Impl
                             Sum = Sql.Sum(x.Amount)
                         }));
                 
+                runningTotal += amount;
+                
+                var transaction = new Transaction
+                {
+                    AccountId = accountId,
+                    Date = DateTimeOffset.UtcNow,
+                    Amount = amount,
+                    CurrentBalance = runningTotal,
+                    Title = title,
+                    MetaData = metaData,
+                    PayPalOrderId = payPalOrderId
+                };
+
+                await con.Connection.SaveAsync(transaction);
+
                 await con.Connection.UpdateOnlyAsync(() => new Account{CurrentBalance = runningTotal}, x => x.Id == accountId);
                 
                 trans.Commit();

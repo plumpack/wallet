@@ -39,6 +39,8 @@ namespace PlumPack.Wallet.Web.Features.AddFunds
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Index(SpecifyAmountInputModel model)
         {
+            model.Amount = model.Amount.TrimMoney();
+            
             if (!ModelState.IsValid)
             {
                 return View(new SpecifyAmountViewModel

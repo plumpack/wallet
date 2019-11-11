@@ -1,8 +1,9 @@
+@using PlumPack.Infrastructure
 @model PlumPack.Wallet.Web.ViewComponents.SideBar.Models.SideBarViewModel
 
 <div class="card">
     <div class="card-header py-3">
-        <span class="h6">Current balance: @Model.Amount</span>
+        <span class="h5">Current balance: <span class="text-@(Model.Amount >= 0 ? "success" : "danger")">@Model.Amount.ToCurrency()</span></span>
     </div>
     <div class="list-group">
         <a asp-controller="Activity" asp-action="Index" class="list-group-item  list-group-item-action @(Model.SelectedTab == "activity" ? "active" : "") d-flex justify-content-between">

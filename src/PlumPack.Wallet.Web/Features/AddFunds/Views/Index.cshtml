@@ -4,6 +4,8 @@
     ViewBag.SelectedWalletTab = "transfer-money";
 }
 
+<h1 class="page-title">Add money</h1>
+
 <form asp-action="Index">
     <partial name="_ValidationSummary"></partial>
     <div class="form-group">
@@ -12,7 +14,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">$</span>
             </div>
-            <input asp-for="Amount"  class="form-control" />
+            <input asp-for="Amount" class="form-control" />
         </div>
         <span asp-validation-for="Amount"></span>
     </div>

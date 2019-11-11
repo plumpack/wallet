@@ -1,10 +1,12 @@
 @{
     ViewBag.SelectedWalletTab = "transfer-money";
 }
+<h1 class="page-title">Transfer money</h1>
 
 <p>
-    <a asp-action="Index" asp-controller="AddFunds" class="btn btn-light">Add money to your balance.</a>
+    <a asp-action="Index" asp-controller="AddFunds" class="btn btn-light btn-lg"><i class="fa fa-plus"></i> Add money to your balance.</a>
 </p>
 <p>
-    <a asp-action="Index" asp-controller="Withdrawal" class="btn btn-light">Transfer money to your bank.</a>
+    <a asp-action="Index" asp-controller="Withdrawal" class="btn btn-light btn-lg"><i class="fa fa-minus"></i> Transfer money to your bank.</a>
 </p>
+
