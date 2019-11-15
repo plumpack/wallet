@@ -1,0 +1,5 @@
+identity.plumpack.com:443
+tls self_signed
+proxy / localhost:5002 {
+    transparent
+}

@@ -4,8 +4,16 @@ services:
     build: ./postgres/
     ports:
     - "5432:5432"
+  caddy:
+    image: abiosoft/caddy
+    network_mode: host
+    volumes:
+      - "./Caddyfile:/etc/Caddyfile"
+    ports:
+    - "80:80"
+    - "443:443"
   identity:
-    image: plumpack/identity-server:0.3.0-alpha.11
+    image: plumpack/identity-server:0.3.0-alpha.15
     volumes:
       - "./identity.yml:/etc/plumpack/identity-server/config.yml"
       - "./email.yml:/etc/plumpack/identity-server/email.yml"
